@@ -9,27 +9,30 @@ const initialState = {
 function accountReducer(state = initialState, action) {
   switch (action.type) {
     case "deposit":
-      return { ...state, balance: state.balance + action.payload };
+      return { ...state, balance: state.balance + +action.payload };
     case "withdraw":
-      return { ...state, balance: state.balance - action.payload };
+      return { ...state, balance: state.balance - +action.payload };
     case "fullName":
       return { ...state, fullName: action.payload };
-    case "deposit":
+    case "mobileNo":
       return { ...state, mobileNo: action.payload };
+    case "reSet":
+      return initialState;
     default:
       return state;
   }
 }
 
-const store = createStore(accountReducer);
+const Store = createStore(accountReducer);
 
-console.log(store.getState());
+Store.dispatch({ type: "deposit", payload: 1000 });
 
-store.dispatch({ type: "deposit", payload: 1000 });
-console.log(store.getState());
-store.dispatch({ type: "withdraw", payload: 100 });
-console.log(store.getState());
-store.dispatch({ type: "fullName", payload: "alexander" });
-console.log(store.getState());
-store.dispatch({ type: "mobileNo", payload: 987654321 });
-console.log(store.getState());
+Store.dispatch({ type: "withdraw", payload: 100 });
+
+Store.dispatch({ type: "fullName", payload: "alexander" });
+
+Store.dispatch({ type: "mobileNo", payload: 987654321 });
+
+Store.dispatch({ type: "reSet" });
+
+export default Store;
